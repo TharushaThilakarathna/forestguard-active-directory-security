@@ -261,10 +261,8 @@ forestguard-active-directory-security
 │
 ├── app
 │   ├── app.py
-│   ├── routes.py
-│   ├── ldap_connector.py
-│   ├── ml_engine.py
-│   └── dashboard.py
+│   ├── ad_connector.py
+│   └── web.config
 │
 ├── models
 │   ├── isolation_forest.pkl
