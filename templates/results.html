@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForestGuard 1.0 - AD Account Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ForestGuard 1.0</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Analysis Results</h2>
+            </div>
+            <div class="card-body">
+                <section class="summary">
+                    <h3>Summary</h3>
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h4>Total Users</h4>
+                            <p id="total-users">0</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Permanent</h4>
+                            <p id="permanent-users">0</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Temporary</h4>
+                            <p id="temporary-users">0</p>
+                        </div>
+                        <div class="summary-card highlight">
+                            <h4>Inactive Temp</h4>
+                            <p id="inactive-temp-users">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h4>Account Distribution</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="account-chart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="color-box permanent"></span>
+                                <span>Permanent</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="color-box active-temp"></span>
+                                <span>Active Temporary</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="color-box inactive-temp"></span>
+                                <span>Inactive Temporary</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="user-accounts">
+                    <div class="section-header">
+                        <h3>Inactive Temporary Accounts</h3>
+                        <div class="actions">
+                            <button id="disable-btn" class="secondary-btn" disabled>Disable Selected</button>
+                            <button id="delete-btn" class="danger-btn" disabled>Delete Selected</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-box">
+                        <p>Showing only inactive temporary accounts identified by the Random Forest model. These accounts are candidates for cleanup.</p>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search inactive accounts...">
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="accounts-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="select-all">
+                                    </th>
+                                    <th>Username</th>
+                                    <th>Description</th>
+                                    <th>Last Login</th>
+                                    <th>Login Count</th>
+                                    <th>Expiry Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accounts-tbody">
+                                <!-- Table rows will be added here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="no-accounts" class="hidden">
+                        <p>No inactive accounts found</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Confirm Action</h3>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel" class="secondary-btn">Cancel</button>
+                <button id="modal-confirm" class="primary-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/results.js') }}"></script>
+</body>
+</html>

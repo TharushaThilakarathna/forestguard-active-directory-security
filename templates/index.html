@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForestGuard 1.0 - AD Account Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ForestGuard 1.0</h1>
+            <nav>
+                <ul>
+                    <li><a href="/" class="active">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="login-card">
+            <div class="card-header">
+                <h2>ForestGuard 1.0</h2>
+            </div>
+            <div class="card-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="server">AD Server IP Address</label>
+                        <input type="text" id="server" name="server" placeholder="172.16.0.1" required>
+                        <small class="form-hint">Enter only the IP address or hostname (e.g., 172.16.0.1)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="username@domain.com" required>
+                        <small class="form-hint">Try formats: domain\username, username@domain.com, or CN=username,DC=domain,DC=com</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="base-dn">Base DN (Optional)</label>
+                        <input type="text" id="base-dn" name="base_dn" placeholder="DC=mydomain,DC=com">
+                        <small class="form-hint">Leave empty to auto-detect. Example: DC=mydomain,DC=com</small>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="debug-mode"> Enable Debug Mode
+                        </label>
+                        <small class="form-hint">Shows more detailed information about the LDAP search process</small>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="button" id="test-connection-btn" class="secondary-btn">Test Connection</button>
+                        <button type="submit" id="analyze-btn">Analyze AD Accounts</button>
+                    </div>
+                </form>
+                
+                <div id="loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Connecting to AD server, please wait...</p>
+                </div>
+                
+                <div id="error-message" class="error hidden"></div>
+                <div id="success-message" class="success hidden"></div>
+                
+                <div id="connection-details" class="hidden">
+                    <h3>Connection Details</h3>
+                    <div id="connection-info" class="connection-info"></div>
+                    <div class="troubleshooting-tips">
+                        <h4>Troubleshooting Tips:</h4>
+                        <ul>
+                            <li>Check if the AD server is reachable from this machine</li>
+                            <li>Verify that the LDAP service is running on the server</li>
+                            <li>Try different username formats:
+                                <ul>
+                                    <li>domain\username</li>
+                                    <li>username@domain.com</li>
+                                    <li>CN=username,DC=domain,DC=com</li>
+                                </ul>
+                            </li>
+                            <li>Make sure the Base DN is correct (use Test Connection to see available DNs)</li>
+                            <li>Check if the server requires SSL/TLS (use ldaps:// prefix)</li>
+                            <li>Verify that the user has permissions to query the directory</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
